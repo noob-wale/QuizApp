@@ -3,7 +3,7 @@
     font-size: 62.5%;
 }
 
-*{
+* {
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
@@ -48,6 +48,7 @@ h3 {
     align-items: center; /* Aligns items horizontal */
     max-width: 80rem;
     margin: 0 auto;
+    padding: 2rem;
 }
 
 .container > * { /*Any child of the container class will fill its width within the container*/
