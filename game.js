@@ -9,35 +9,36 @@ let acceptAnswers = true;
 let questionCounter = 0;
 let availableQuestions = [];
 
-let questions = [
-    {
-      question: "Inside which HTML element do we put the JavaScript??",
-      choice1: "<script>",
-      choice2: "<javascript>",
-      choice3: "<js>",
-      choice4: "<scripting>",
-      answer: 1
-    },
-    {
-      question: "What is the correct syntax for referring to an external script called 'xxx.js'?",
-      choice1: "<script href='xxx.js'>",
-      choice2: "<script name='xxx.js'>",
-      choice3: "<script src='xxx.js'>",
-      choice4: "<script file='xxx.js'>",
-      answer: 3
-    },
-    {
-      question: " How do you write 'Hello World' in an alert box?",
-      choice1: "msgBox('Hello World');",
-      choice2: "alertBox('Hello World');",
-      choice3: "msg('Hello World');",
-      choice4: "alert('Hello World');",
-      answer: 4
-    }
-  ];
+let questions = [];
 
 const CORRECT_BONUS = 10;
 const MAX_QUESTIONS = 3;
+
+
+fetch('https://opentdb.com/api.php?amount=20&category=9&type=multiple').then(res => {
+  return res.json();
+}).then(loadedQuestions => {
+  questions = loadedQuestions.results.map(loadedQuestion => {
+    const formattedQuestion = {
+      question: loadedQuestion.question
+    };
+
+    const answerChoices = [...loadedQuestion.incorrect_answers];
+    formattedQuestion.answer = Math.floor(Math.random() * 3) + 1;
+    answerChoices.splice(
+      formattedQuestion.answer - 1, 0,
+      loadedQuestion.correct_answer
+    );
+
+    answerChoices.forEach((choice, index) => {
+      formattedQuestion['choice' + (index + 1)] = choice;
+    });
+    return formattedQuestion;
+  });
+  startGame();
+}).catch(err => {
+  console.error(err);
+});
 
 function startGame() {
     questionCounter = 0;
