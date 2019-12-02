@@ -90,7 +90,7 @@ choices.forEach(choice => {
 
 function incrementScore(num) {
   score += num;
-  scoreBoard.innerText = score;
+  scoreBoard.innerText = `score ${score}`;
 }
 
 startGame();
